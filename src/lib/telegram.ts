@@ -1,6 +1,6 @@
 import type { ListItem, Product } from "./types";
 
-export const TELEGRAM_HANDLE = "vapespot_store";
+export const TELEGRAM_HANDLE = "Storea420";
 
 export interface OrderLine {
   product: Product;
