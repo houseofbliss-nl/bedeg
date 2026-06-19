@@ -58,6 +58,12 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = ""): 
     ? `🚚  DELIVERY ADDRESS\n\n    ${deliveryAddress.trim()}`
     : `🚚  DELIVERY ADDRESS\n\n    Not specified`;
 
+  const deliveryMethod = [
+    "🛵  DELIVERY METHOD",
+    "    Hand-delivered by local courier — usually 30 min–2hrs.",
+    "    Not sent via Australia Post.",
+  ].join("\n");
+
   const payment = [
     "💳  PAYMENT",
     "    PayID, Bank Transfer or Crypto — payment required before delivery.",
@@ -74,6 +80,8 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = ""): 
     totalLine,
     divider,
     addressSection,
+    divider,
+    deliveryMethod,
     divider,
     payment,
     divider,
