@@ -146,30 +146,18 @@ export function OrderSummary() {
             <p className="text-[13.5px] md:text-[16px] lg:text-[18px] font-extrabold text-[#0A0A0A] tracking-tight whitespace-nowrap">
               Fast &amp; Reliable Delivery
             </p>
+            <p className="text-[11px] md:text-[13px] text-[#6E6E73] font-medium">
+              By local courier — not Australia Post.
+            </p>
 
             <div className="space-y-1.5 md:space-y-2">
-              {/* Local */}
               <div className="flex items-center gap-2 md:gap-3">
                 <div className="h-5 w-5 md:h-7 md:w-7 rounded-full bg-[#EDE9FF] flex items-center justify-center shrink-0">
                   <Zap className="h-2.5 w-2.5 md:h-3.5 md:w-3.5 text-[#5B3DF5]" fill="#5B3DF5" strokeWidth={0} />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[12px] md:text-[14px] lg:text-[15px] font-semibold text-[#2D2D2D]">Local area :</span>
-                  <span className="text-[12px] md:text-[14px] lg:text-[15px] font-bold text-[#5B3DF5]">within 1 hour</span>
-                </div>
-              </div>
-
-              {/* Separator */}
-              <div className="ml-7 md:ml-10 h-px bg-[#EDE9FF]" />
-
-              {/* Nationwide */}
-              <div className="flex items-center gap-2 md:gap-3">
-                <div className="h-5 w-5 md:h-7 md:w-7 rounded-full bg-[#EDE9FF] flex items-center justify-center shrink-0">
-                  <Truck className="h-2.5 w-2.5 md:h-3.5 md:w-3.5 text-[#5B3DF5]" strokeWidth={1.75} />
-                </div>
-                <div className="min-w-0">
-                  <span className="text-[12px] md:text-[14px] lg:text-[15px] font-semibold text-[#2D2D2D]">Nationwide :</span>
-                  <span className="text-[12px] md:text-[14px] lg:text-[15px] font-bold text-[#5B3DF5]">1–3 business days</span>
+                  <span className="text-[12px] md:text-[14px] lg:text-[15px] font-semibold text-[#2D2D2D]">Delivery time : </span>
+                  <span className="text-[12px] md:text-[14px] lg:text-[15px] font-bold text-[#5B3DF5]">usually 30 min–2hrs, depending on your location</span>
                 </div>
               </div>
             </div>
