@@ -145,7 +145,7 @@ export function MyList() {
       {/* Order CTA */}
       <div className="px-4 mt-6 space-y-2">
         <p className="text-center text-[13px] md:text-sm font-semibold text-[#7C3AED] mb-1">
-          🛵 Hand-delivered by local courier, usually 30 min–2hrs — not Australia Post.
+          🛵 Hand-delivered by local courier, usually 30 min–2hrs — or via Australia Post.
         </p>
         <Link
           to="/order-summary"

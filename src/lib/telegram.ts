@@ -29,7 +29,7 @@ function fmt(p: number | null | undefined): string {
   return `A$${p.toFixed(2)}`;
 }
 
-export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = ""): string {
+export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", deliveryMethod: "courier" | "australia_post" = "courier"): string {
   if (lines.length === 0) {
     return "Hello! I'd like to place an order on Vape Spot.";
   }
@@ -58,11 +58,9 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = ""): 
     ? `🚚  DELIVERY ADDRESS\n\n    ${deliveryAddress.trim()}`
     : `🚚  DELIVERY ADDRESS\n\n    Not specified`;
 
-  const deliveryMethod = [
-    "🛵  DELIVERY METHOD",
-    "    Hand-delivered by local courier — usually 30 min–2hrs.",
-    "    Not sent via Australia Post.",
-  ].join("\n");
+  const deliveryMethodSection = deliveryMethod === "courier"
+    ? ["🛵  DELIVERY METHOD", "    Hand-delivered by local courier — usually 30 min–2hrs.", "    (Or via Australia Post if requested.)"].join("\n")
+    : ["📮  DELIVERY METHOD", "    Via Australia Post — 1–3 business days, depending on location."].join("\n");
 
   const payment = [
     "💳  PAYMENT",
@@ -81,7 +79,7 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = ""): 
     divider,
     addressSection,
     divider,
-    deliveryMethod,
+    deliveryMethodSection,
     divider,
     payment,
     divider,
