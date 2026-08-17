@@ -152,7 +152,7 @@ export function MyList() {
           🛵 Hand-delivered by local courier, usually 30 min–2hrs — or via Australia Post.
         </p>
         <p className="text-center text-[13px] md:text-sm font-semibold text-[#16A34A] mb-1">
-          Save 10% when you pay with a Gift Card.
+          Save 10% when you pay with Crypto or a Gift Card.
         </p>
         <Link
           to="/order-summary"

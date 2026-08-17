@@ -25,6 +25,10 @@ export function ordersTotal(lines: OrderLine[]): number {
   return lines.reduce((s, l) => s + lineTotal(l), 0);
 }
 
+export function discountedOrdersTotal(lines: OrderLine[]): number {
+  return ordersTotal(lines) * 0.9;
+}
+
 function fmt(p: number | null | undefined): string {
   if (p == null) return "Price on request";
   return `A$${p.toFixed(2)}`;
@@ -53,7 +57,13 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", d
     })
     .join("\n\n");
 
-  const totalLine = `TOTAL:  ${fmt(ordersTotal(lines))} AUD`;
+  const total = ordersTotal(lines);
+  const discountedTotal = discountedOrdersTotal(lines);
+  const totalsSection = [
+    "💰  ORDER TOTALS",
+    `    PayID / Bank Transfer: ${fmt(total)} AUD`,
+    `    Crypto / Gift Card (10% off): ${fmt(discountedTotal)} AUD`,
+  ].join("\n");
 
   const addressSection = deliveryAddress.trim()
     ? `🚚  DELIVERY ADDRESS\n\n    ${deliveryAddress.trim()}`
@@ -65,7 +75,10 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", d
 
   const payment = [
     "💳  PAYMENT",
-    "    PayID, Bank Transfer, Crypto or Gift Card (10% off) — payment required before delivery.",
+    "    PayID or Bank Transfer: standard total.",
+    "    Crypto or Gift Card: 10% off the order total.",
+    "    Minimum order: A$100.00.",
+    "    Payment required before delivery.",
   ].join("\n");
 
   const footer = "Please reply to confirm this order. Thank you! 🙏";
@@ -76,7 +89,7 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", d
     "📦  ORDER\n",
     productLines,
     divider,
-    totalLine,
+    totalsSection,
     divider,
     addressSection,
     divider,

@@ -9,6 +9,7 @@ import {
   buildOrderLines,
   buildTelegramMessage,
   buildTelegramUrl,
+  discountedOrdersTotal,
   lineTotal,
   ordersTotal,
 } from "@/lib/telegram";
@@ -120,8 +121,8 @@ export function OrderSummary() {
       {/* ── Estimated Total ── */}
       <div className="bg-white border border-[#E8E8E8] p-4 flex items-center justify-between">
         <div>
-          <p className="font-bold text-black text-[15px]">Estimated Total</p>
-          <p className="text-xs text-[#6E6E73] mt-0.5">Including products only</p>
+          <p className="font-bold text-black text-[15px]">PayID / Bank Transfer Total</p>
+          <p className="text-xs text-[#6E6E73] mt-0.5">Standard order total</p>
         </div>
         <p className="text-[26px] font-extrabold text-black leading-none">
           {formatPrice(ordersTotal(lines))}
@@ -129,7 +130,10 @@ export function OrderSummary() {
         </p>
       </div>
       <p className="text-[12px] text-[#1F1F1F] mt-1 text-center lg:text-left">
-        Minimum order: A$50.00
+        Crypto / Gift Card total (10% off): {formatPrice(discountedOrdersTotal(lines))} AUD
+      </p>
+      <p className="text-[12px] text-[#1F1F1F] text-center lg:text-left">
+        Minimum order: A$100.00
       </p>
 
       {/* ── Payment notice ── */}
@@ -145,7 +149,7 @@ export function OrderSummary() {
               Your order will be processed after payment confirmation.
             </p>
             <p className="text-[13px] md:text-[15px] lg:text-[16px] text-[#16A34A] mt-1.5 leading-snug font-semibold">
-              Save 10% when you pay with a Gift Card.
+              Save 10% when you pay with Crypto or a Gift Card.
             </p>
           </div>
         </div>
@@ -277,7 +281,7 @@ export function OrderSummary() {
       </div>
 
       {/* ── Telegram CTA ── */}
-      {ordersTotal(lines) >= 50 ? (
+      {ordersTotal(lines) >= 100 ? (
         <a
           href={url}
           target="_blank"
@@ -298,7 +302,7 @@ export function OrderSummary() {
             Proceed to Checkout
           </button>
           <p className="text-center text-[13px] text-[#E53E3E] mt-2 font-medium">
-            Minimum order not reached. Add A${(50 - ordersTotal(lines)).toFixed(2)} more to place your order.
+            Minimum order not reached. Add A${(100 - ordersTotal(lines)).toFixed(2)} more to place your order.
           </p>
         </div>
       )}

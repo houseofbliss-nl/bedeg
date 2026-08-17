@@ -132,7 +132,7 @@ export function ProductDetails({ product }: { product: Product }) {
               🛵 Local courier delivery — usually 30 min to 2 hrs, or via Australia Post.
             </p>
             <p className="text-[13px] md:text-[14px] font-semibold text-[#16A34A]">
-              Save 10% when you pay with a Gift Card.
+              Save 10% when you pay with Crypto or a Gift Card.
             </p>
             <PackPricing product={product} />
           </header>
