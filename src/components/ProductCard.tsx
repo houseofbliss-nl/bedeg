@@ -22,7 +22,7 @@ export function ProductCard({
   };
 
   return (
-    <div className="w-full min-h-[260px] lg:h-full flex items-stretch border-t border-b border-gray-200 bg-[#F5F5F5]">
+    <div className="w-full min-h-[320px] lg:h-full flex items-stretch border-t border-b border-gray-200 bg-[#F5F5F5]">
       {/* Image — LEFT */}
       <Link
         to="/product/$id"

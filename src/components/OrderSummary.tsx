@@ -110,7 +110,7 @@ export function OrderSummary() {
 
                 {/* Line total */}
                 <span className="text-right text-[14px] lg:text-[15px] font-bold text-black whitespace-nowrap">
-                  {formatPackPrice(lineTotal(l))}
+                  {l.quantity === 1 ? formatPrice(lineTotal(l)) : formatPackPrice(lineTotal(l))}
                 </span>
               </li>
             );
@@ -129,7 +129,7 @@ export function OrderSummary() {
           <span className="ml-1.5 text-[14px] font-bold text-[#6E6E73]">AUD</span>
         </p>
       </div>
-      <p className="text-[12px] text-[#1F1F1F] mt-1 text-center lg:text-left">
+      <p className="text-[12px] text-[#5B3DF5] mt-1 text-center lg:text-left">
         Crypto / Gift Card total (10% off): {formatPrice(discountedOrdersTotal(lines))} AUD
       </p>
       <p className="text-[12px] text-[#1F1F1F] text-center lg:text-left">
@@ -148,7 +148,7 @@ export function OrderSummary() {
             <p className="text-[13px] md:text-[15px] lg:text-[16px] text-[#6E6E73] mt-1.5 leading-snug">
               Your order will be processed after payment confirmation.
             </p>
-            <p className="text-[13px] md:text-[15px] lg:text-[16px] text-[#16A34A] mt-1.5 leading-snug font-semibold">
+            <p className="text-[13px] md:text-[15px] lg:text-[16px] text-[#5B3DF5] mt-1.5 leading-snug font-semibold">
               Save 10% when you pay with Crypto or a Gift Card.
             </p>
           </div>

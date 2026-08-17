@@ -131,7 +131,7 @@ export function ProductDetails({ product }: { product: Product }) {
             <p className="text-[13px] md:text-[14px] text-[#7C3AED] font-semibold">
               🛵 Local courier delivery — usually 30 min to 2 hrs, or via Australia Post.
             </p>
-            <p className="text-[13px] md:text-[14px] font-semibold text-[#16A34A]">
+            <p className="text-[13px] md:text-[14px] font-semibold text-[#5B3DF5]">
               Save 10% when you pay with Crypto or a Gift Card.
             </p>
             <PackPricing product={product} />

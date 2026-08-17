@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Minus, Plus, Send } from "lucide-react";
-import { findProduct, onImageError, productCard } from "@/lib/data";
+import { findProduct, formatPrice, onImageError, productCard } from "@/lib/data";
 import { useMyList } from "@/lib/storage";
 import type { Product } from "@/lib/types";
 import { buildTelegramMessage, buildTelegramUrl, buildOrderLines } from "@/lib/telegram";
@@ -100,7 +100,9 @@ export function MyList() {
                     })()}
 
                     <span className="mt-1 text-[18px] lg:text-[22px] font-bold text-black">
-                      {formatPackPrice(packPrice(product.price_aud, item.quantity))}
+                      {item.quantity === 1
+                        ? formatPrice(product.price_aud)
+                        : formatPackPrice(packPrice(product.price_aud, item.quantity))}
                       <span className="ml-1 text-[12px] font-semibold text-[#9E9E9E]">AUD</span>
                     </span>
                     <span className="text-[12px] font-bold text-[#5B3DF5]">
@@ -151,7 +153,7 @@ export function MyList() {
         <p className="text-center text-[13px] md:text-sm font-semibold text-[#7C3AED] mb-1">
           🛵 Hand-delivered by local courier, usually 30 min–2hrs — or via Australia Post.
         </p>
-        <p className="text-center text-[13px] md:text-sm font-semibold text-[#16A34A] mb-1">
+        <p className="text-center text-[13px] md:text-sm font-semibold text-[#5B3DF5] mb-1">
           Save 10% when you pay with Crypto or a Gift Card.
         </p>
         <Link

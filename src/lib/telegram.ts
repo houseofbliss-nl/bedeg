@@ -52,7 +52,11 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", d
   const productLines = lines
     .map((l, i) => {
       const unit = l.product.price_aud == null ? "Price on request" : fmt(l.product.price_aud);
-      const total = l.product.price_aud == null ? "—" : formatPackPrice(lineTotal(l));
+      const total = l.product.price_aud == null
+        ? "—"
+        : l.quantity === 1
+          ? fmt(lineTotal(l))
+          : formatPackPrice(lineTotal(l));
       return `${i + 1}. ${l.product.name}\n     ${unit} × pack of ${l.quantity} = ${total}`;
     })
     .join("\n\n");
