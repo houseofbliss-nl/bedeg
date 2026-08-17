@@ -7,6 +7,8 @@ import { SpecificationsTable } from "./SpecificationsTable";
 import { ProductCard } from "./ProductCard";
 import { useMyList } from "@/lib/storage";
 import { toast } from "sonner";
+import { PackPricing } from "./PackPricing";
+import { PACK_SIZES, formatPackPrice, packPrice } from "@/lib/pricing";
 import {
   formatPrice,
   loadLeafFile,
@@ -123,13 +125,25 @@ export function ProductDetails({ product }: { product: Product }) {
             <p className="text-[26px] font-bold text-black">
               {formatPrice(product.price_aud)}
             </p>
+            <p className="text-[15px] md:text-[16px] font-extrabold text-[#5B3DF5]">
+              Pack of {qty}: {formatPackPrice(packPrice(product.price_aud, qty))}
+            </p>
             <p className="text-[13px] md:text-[14px] text-[#7C3AED] font-semibold">
               🛵 Local courier delivery — usually 30 min to 2 hrs, or via Australia Post.
             </p>
+            <p className="text-[13px] md:text-[14px] font-semibold text-[#16A34A]">
+              Save 10% when you pay with a Gift Card.
+            </p>
+            <PackPricing product={product} />
           </header>
 
           <div className="flex items-center gap-3">
-            <QuantitySelector value={qty} onChange={(v) => setQty(Math.max(1, v))} min={1} />
+            <QuantitySelector
+              value={qty}
+              onChange={(v) => setQty(v)}
+              min={1}
+              steps={PACK_SIZES}
+            />
             <button
               type="button"
               onClick={() => {

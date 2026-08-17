@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Minus, Plus, Send } from "lucide-react";
-import { findProduct, formatPrice, onImageError, productCard } from "@/lib/data";
+import { findProduct, onImageError, productCard } from "@/lib/data";
 import { useMyList } from "@/lib/storage";
 import type { Product } from "@/lib/types";
 import { buildTelegramMessage, buildTelegramUrl, buildOrderLines } from "@/lib/telegram";
+import { formatPackPrice, nextPackSize, packPrice, previousPackSize, normalizePackSize } from "@/lib/pricing";
 
 export function MyList() {
   const { items, setQuantity, remove } = useMyList();
@@ -99,8 +100,11 @@ export function MyList() {
                     })()}
 
                     <span className="mt-1 text-[18px] lg:text-[22px] font-bold text-black">
-                      {formatPrice(product.price_aud)}
+                      {formatPackPrice(packPrice(product.price_aud, item.quantity))}
                       <span className="ml-1 text-[12px] font-semibold text-[#9E9E9E]">AUD</span>
+                    </span>
+                    <span className="text-[12px] font-bold text-[#5B3DF5]">
+                      Pack of {normalizePackSize(item.quantity)}
                     </span>
                   </Link>
                 </div>
@@ -109,18 +113,18 @@ export function MyList() {
                 <div className="mt-2 inline-flex items-center border border-[#D0D0D0] self-start">
                   <button
                     type="button"
-                    onClick={() => setQuantity(product.id, Math.max(1, item.quantity - 1))}
+                    onClick={() => setQuantity(product.id, previousPackSize(item.quantity))}
                     aria-label="Decrease"
                     className="w-8 h-8 flex items-center justify-center hover:bg-[#E8E8E8] transition-colors"
                   >
                     <Minus className="h-3.5 w-3.5" />
                   </button>
                   <span className="w-8 h-8 flex items-center justify-center text-[14px] font-semibold border-x border-[#D0D0D0]">
-                    {item.quantity}
+                    {normalizePackSize(item.quantity)}
                   </span>
                   <button
                     type="button"
-                    onClick={() => setQuantity(product.id, item.quantity + 1)}
+                    onClick={() => setQuantity(product.id, nextPackSize(item.quantity))}
                     aria-label="Increase"
                     className="w-8 h-8 flex items-center justify-center hover:bg-[#E8E8E8] transition-colors"
                   >
@@ -146,6 +150,9 @@ export function MyList() {
       <div className="px-4 mt-6 space-y-2">
         <p className="text-center text-[13px] md:text-sm font-semibold text-[#7C3AED] mb-1">
           🛵 Hand-delivered by local courier, usually 30 min–2hrs — or via Australia Post.
+        </p>
+        <p className="text-center text-[13px] md:text-sm font-semibold text-[#16A34A] mb-1">
+          Save 10% when you pay with a Gift Card.
         </p>
         <Link
           to="/order-summary"

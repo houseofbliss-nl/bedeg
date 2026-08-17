@@ -12,6 +12,7 @@ import {
   lineTotal,
   ordersTotal,
 } from "@/lib/telegram";
+import { formatPackPrice } from "@/lib/pricing";
 
 export function OrderSummary() {
   const { items } = useMyList();
@@ -103,12 +104,12 @@ export function OrderSummary() {
 
                 {/* Qty */}
                 <span className="text-center text-[13px] lg:text-[15px] text-[#6E6E73] whitespace-nowrap">
-                  × {l.quantity}
+                  Pack {l.quantity}
                 </span>
 
                 {/* Line total */}
                 <span className="text-right text-[14px] lg:text-[15px] font-bold text-black whitespace-nowrap">
-                  {formatPrice(lineTotal(l))}
+                  {formatPackPrice(lineTotal(l))}
                 </span>
               </li>
             );
@@ -142,6 +143,9 @@ export function OrderSummary() {
             </p>
             <p className="text-[13px] md:text-[15px] lg:text-[16px] text-[#6E6E73] mt-1.5 leading-snug">
               Your order will be processed after payment confirmation.
+            </p>
+            <p className="text-[13px] md:text-[15px] lg:text-[16px] text-[#16A34A] mt-1.5 leading-snug font-semibold">
+              Save 10% when you pay with a Gift Card.
             </p>
           </div>
         </div>
@@ -282,7 +286,7 @@ export function OrderSummary() {
           className="flex items-center justify-center gap-2 w-full bg-black text-white py-4 text-[15px] font-semibold hover:bg-[#1a1a1a] transition-colors"
         >
           <Send className="h-4 w-4" />
-          Contact us on Telegram
+          Proceed to Checkout
         </a>
       ) : (
         <div className="w-full">
@@ -291,7 +295,7 @@ export function OrderSummary() {
             className="flex items-center justify-center gap-2 w-full bg-[#E5E5E5] text-[#9E9E9E] py-4 text-[15px] font-semibold cursor-not-allowed"
           >
             <Send className="h-4 w-4" />
-            Contact us on Telegram
+            Proceed to Checkout
           </button>
           <p className="text-center text-[13px] text-[#E53E3E] mt-2 font-medium">
             Minimum order not reached. Add A${(50 - ordersTotal(lines)).toFixed(2)} more to place your order.

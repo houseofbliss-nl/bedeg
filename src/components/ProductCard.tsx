@@ -3,6 +3,7 @@ import type { Product } from "@/lib/types";
 import { formatPrice, onImageError, productCard } from "@/lib/data";
 import { useMyList } from "@/lib/storage";
 import { toast } from "sonner";
+import { PackPricing } from "./PackPricing";
 
 export function ProductCard({
   product,
@@ -82,6 +83,7 @@ export function ProductCard({
             <span className="mt-0.5 text-[11px] font-semibold text-[#7C3AED]">
               🛵 30 min–2hr delivery
             </span>
+            <PackPricing product={product} compact />
           </Link>
         </div>
 

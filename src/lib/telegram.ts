@@ -1,4 +1,5 @@
 import type { ListItem, Product } from "./types";
+import { formatPackPrice, normalizePackSize, packPrice } from "./pricing";
 
 export const TELEGRAM_HANDLE = "Storea420";
 
@@ -11,13 +12,13 @@ export function buildOrderLines(items: ListItem[], products: Product[]): OrderLi
   return items
     .map((i) => {
       const product = products.find((p) => p.id === i.productId);
-      return product ? { product, quantity: i.quantity } : null;
+      return product ? { product, quantity: normalizePackSize(i.quantity) } : null;
     })
     .filter((x): x is OrderLine => x !== null);
 }
 
 export function lineTotal(line: OrderLine): number {
-  return (line.product.price_aud ?? 0) * line.quantity;
+  return packPrice(line.product.price_aud, line.quantity) ?? 0;
 }
 
 export function ordersTotal(lines: OrderLine[]): number {
@@ -47,8 +48,8 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", d
   const productLines = lines
     .map((l, i) => {
       const unit = l.product.price_aud == null ? "Price on request" : fmt(l.product.price_aud);
-      const total = l.product.price_aud == null ? "—" : fmt(lineTotal(l));
-      return `${i + 1}. ${l.product.name}\n     ${unit} × ${l.quantity} = ${total}`;
+      const total = l.product.price_aud == null ? "—" : formatPackPrice(lineTotal(l));
+      return `${i + 1}. ${l.product.name}\n     ${unit} × pack of ${l.quantity} = ${total}`;
     })
     .join("\n\n");
 
@@ -64,7 +65,7 @@ export function buildTelegramMessage(lines: OrderLine[], deliveryAddress = "", d
 
   const payment = [
     "💳  PAYMENT",
-    "    PayID, Bank Transfer, Crypto or Gift Card — payment required before delivery.",
+    "    PayID, Bank Transfer, Crypto or Gift Card (10% off) — payment required before delivery.",
   ].join("\n");
 
   const footer = "Please reply to confirm this order. Thank you! 🙏";

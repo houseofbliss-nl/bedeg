@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { ListItem } from "./types";
+import { normalizePackSize } from "./pricing";
 
 const KEYS = {
   age: "ageVerified",
@@ -61,8 +62,8 @@ export function useMyList() {
       const idx = current.findIndex((i) => i.productId === productId);
       const next =
         idx >= 0
-          ? current.map((i, n) => (n === idx ? { ...i, quantity: i.quantity + quantity } : i))
-          : [...current, { productId, quantity }];
+          ? current.map((i, n) => (n === idx ? { ...i, quantity: normalizePackSize(i.quantity + quantity) } : i))
+          : [...current, { productId, quantity: normalizePackSize(quantity) }];
       save(next);
     },
     [save],
@@ -71,12 +72,13 @@ export function useMyList() {
   const setQuantity = useCallback(
     (productId: string, quantity: number) => {
       const current = read<ListItem[]>(KEYS.list, []);
+      const normalizedQuantity = normalizePackSize(quantity);
       const next =
         quantity <= 0
           ? current.filter((i) => i.productId !== productId)
           : current.some((i) => i.productId === productId)
-            ? current.map((i) => (i.productId === productId ? { ...i, quantity } : i))
-            : [...current, { productId, quantity }];
+            ? current.map((i) => (i.productId === productId ? { ...i, quantity: normalizedQuantity } : i))
+            : [...current, { productId, quantity: normalizedQuantity }];
       save(next);
     },
     [save],
