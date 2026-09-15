@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /my-list
+Disallow: /order-summary
+
+Sitemap: https://puffstorea420.shop/sitemap.xml
